@@ -68,7 +68,7 @@ connection.__query(sql, {
     res.status(500).send({
         status : false,
         error : err,
-        statusText : 'Failed to get student'
+        statusText : 'Failed to get session'
 
     })
 })
