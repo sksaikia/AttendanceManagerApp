@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:id="@+id/parent_layout"
+    tools:context=".ui.auth.register.RegisterFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="20dp"
+        android:layout_height="match_parent">
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/email"
+            app:startIconDrawable="@drawable/ic_mail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            app:helperTextEnabled="true"
+            app:helperTextTextColor="@color/colortexthint"
+            app:helperText="We will use this email address to verify your access"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:id="@+id/et_email"
+                android:textColor="@color/colortext"
+                android:layout_height="wrap_content"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/first_name"
+            app:startIconDrawable="@drawable/ic_person"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="First Name"
+            android:layout_marginTop="10dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:id="@+id/et_first_name"
+                android:textColor="@color/colortext"
+                android:layout_height="wrap_content"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/last_name"
+            app:startIconDrawable="@drawable/ic_person"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Last Name"
+            android:layout_marginTop="10dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:id="@+id/et_last_name"
+                android:textColor="@color/colortext"
+                android:layout_height="wrap_content"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/password"
+            app:startIconDrawable="@drawable/ic_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Password"
+            app:endIconMode="password_toggle"
+            android:layout_marginTop="10dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/et_password"
+                android:inputType="textPassword"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <Button
+            android:id="@+id/register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Register"
+            app:rippleColor="@color/btnbg"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            style="?attr/materialButtonOutlinedStyle"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:textSize="16sp"
+            android:id="@+id/login"
+            android:textColor="@color/colorAccent"
+            android:text="Already has an account? Go to LOGIN">
+
+
+        </TextView>
+
+
+        <ProgressBar
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:visibility="invisible"
+            android:layout_marginTop="20dp"
+            android:id="@+id/progress_bar">
+
+
+
+        </ProgressBar>
+
+    </LinearLayout>
+
+</LinearLayout>
