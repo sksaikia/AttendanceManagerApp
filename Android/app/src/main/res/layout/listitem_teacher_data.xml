@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/background"
+    android:orientation="vertical">
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmer_view_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        >
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:id="@+id/mat_card"
+            android:layout_margin="10dp"
+            app:cardElevation="8sp"
+            app:cardCornerRadius="8dp"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:id="@+id/rel_layout"
+                android:layout_height="wrap_content">
+
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="80dp"
+                    android:id="@+id/image"
+                    android:layout_margin="5dp"
+                    android:layout_alignParentLeft="true"
+                    android:background="@color/shimmer_color"
+                    tools:src="@drawable/ic_person"
+                    android:layout_height="80dp">
+
+
+                </de.hdodenhof.circleimageview.CircleImageView>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="80dp"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center"
+                    android:layout_marginBottom="10dp"
+                    android:padding="4dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        tools:text="Name"
+                        android:textColor="@color/colortextdark"
+                        android:textSize="18sp"
+                        android:id="@+id/name"
+                        android:background="@color/shimmer_color"
+                        android:layout_height="wrap_content">
+
+                    </TextView>
+
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        tools:text="Test Name"
+                        android:layout_marginTop="5sp"
+                        android:background="@color/shimmer_color"
+                        android:textColor="@color/colortextdark"
+                        android:textSize="16sp"
+                        android:id="@+id/rollno"
+                        android:layout_height="wrap_content">
+
+                    </TextView>
+
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+</LinearLayout>

@@ -14,9 +14,12 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.attendancemanager.R;
+import com.example.attendancemanager.ui.main.classes.home.ClassHomeFragment;
 import com.example.attendancemanager.ui.main.home.adapter.HomeAdapter;
 import com.example.attendancemanager.ui.main.home.adapter.HomeItem;
+import com.example.attendancemanager.ui.main.routine.home.RoutineHomeFragment;
 import com.example.attendancemanager.ui.main.students.home.StudentsHomeFragment;
+import com.example.attendancemanager.ui.main.teachers.home.TeachersHomeFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +45,15 @@ public class HomeFragment extends Fragment {
 
     @Inject
     StudentsHomeFragment studentsHomeFragment;
+
+    @Inject
+    TeachersHomeFragment teachersHomeFragment;
+
+    @Inject
+    ClassHomeFragment classHomeFragment;
+
+    @Inject
+    RoutineHomeFragment routineHomeFragment;
 
     @Inject
     public HomeFragment() {
@@ -74,13 +86,13 @@ public class HomeFragment extends Fragment {
 
             case 0 :
                 break;
-            case 1 :
+            case 1 : initializeFragments(routineHomeFragment);
                 break;
             case 2 : initializeFragments(studentsHomeFragment);
                 break;
-            case 3 :
+            case 3 :  initializeFragments(teachersHomeFragment);
                 break;
-            case 4 :
+            case 4 :    initializeFragments(classHomeFragment);
                 break;
             case 5 :
                 break;

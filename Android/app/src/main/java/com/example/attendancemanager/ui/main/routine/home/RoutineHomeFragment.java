@@ -1,4 +1,4 @@
-package com.example.attendancemanager.ui.main.students.home;
+package com.example.attendancemanager.ui.main.routine.home;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -15,8 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.attendancemanager.R;
 import com.example.attendancemanager.ui.main.home.adapter.HomeAdapter;
 import com.example.attendancemanager.ui.main.home.adapter.HomeItem;
-import com.example.attendancemanager.ui.main.students.addStudent.AddStudentFragment;
-import com.example.attendancemanager.ui.main.students.allstudents.AllStudentsFragment;
+import com.example.attendancemanager.ui.main.routine.addRoutine.AddRoutineFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,23 +26,18 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.support.AndroidSupportInjection;
 
-public class StudentsHomeFragment extends Fragment {
-
-    @Inject
-    HomeAdapter adapter;
-    @BindView(R.id.recycler_view)
-    RecyclerView recyclerView;
-
-    @Inject
-    AddStudentFragment addStudentFragment;
-
-    @Inject
-    AllStudentsFragment allStudentsFragment;
+public class RoutineHomeFragment extends Fragment {
 
     ArrayList<HomeItem> mList;
+    @Inject
+    HomeAdapter adapter;
 
-    private static final String TAG = "StudentsHomeFragment";
+    private static final String TAG = "RoutineHomeFragment";
 
+    @Inject
+    AddRoutineFragment addRoutineFragment;
+    @BindView(R.id.recycler_view)
+    RecyclerView recyclerView;
 
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
@@ -57,24 +51,12 @@ public class StudentsHomeFragment extends Fragment {
             goToFragment(position);
 
 
-//
-//            String name = mList.get(position);
-//
-//            Log.d(TAG, "onClick: ID of the object :: " + name);
-////
-//            Bundle bundle = new Bundle();
-//            bundle.putString(Constants.BUNDLE_ALL_TO_SINGLE_CAT, name);
-//            singleCategoryFragment.setArguments(bundle);
-
-            //   initializeFragments(singleCategoryFragment);
-
         }
     };
 
 
-
     @Inject
-    public StudentsHomeFragment() {
+    public RoutineHomeFragment() {
         // Required empty public constructor
     }
 
@@ -82,20 +64,21 @@ public class StudentsHomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_students_home, container, false);
-
-
+        View view = inflater.inflate(R.layout.fragment_routine_home, container, false);
         AndroidSupportInjection.inject(this);
-        ButterKnife.bind(this,view);
+        ButterKnife.bind(this, view);
 
+        mList = new ArrayList<>();
 
         setUpRecyclerView(recyclerView,adapter);
+
 
         return view;
     }
@@ -107,24 +90,24 @@ public class StudentsHomeFragment extends Fragment {
 
         super.onAttach(context);
     }
+
     private void goToFragment(int position) {
 
-        switch (position){
+        switch (position) {
 
-            case 0 :    initializeFragments(allStudentsFragment);
+            case 0:
+                initializeFragments(addRoutineFragment);
                 break;
-            case 1 :    initializeFragments(addStudentFragment);
-                break;
+
 
         }
 
     }
 
 
-
     private void setUpRecyclerView(RecyclerView recyclerView, HomeAdapter adapter) {
 
-        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),2));
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         recyclerView.setAdapter(adapter);
         adapter.setOnItemClickListener(onClickListener);
 
@@ -133,8 +116,8 @@ public class StudentsHomeFragment extends Fragment {
 
     private List<HomeItem> loadItems() {
         mList = new ArrayList<>();
-        mList.add(new HomeItem(R.drawable.ic_take_attendance,"Students Data"));
-        mList.add(new HomeItem(R.drawable.ic_routine,"Add a student"));
+        mList.add(new HomeItem(R.drawable.ic_take_attendance, "Add subject to routine"));
+        mList.add(new HomeItem(R.drawable.ic_routine, "Edit Routine"));
 
         return mList;
 

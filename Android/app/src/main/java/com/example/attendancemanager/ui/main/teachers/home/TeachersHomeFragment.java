@@ -1,22 +1,25 @@
-package com.example.attendancemanager.ui.main.students.home;
+package com.example.attendancemanager.ui.main.teachers.home;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
 import com.example.attendancemanager.R;
 import com.example.attendancemanager.ui.main.home.adapter.HomeAdapter;
 import com.example.attendancemanager.ui.main.home.adapter.HomeItem;
 import com.example.attendancemanager.ui.main.students.addStudent.AddStudentFragment;
 import com.example.attendancemanager.ui.main.students.allstudents.AllStudentsFragment;
+import com.example.attendancemanager.ui.main.teachers.addTeacher.AddTeacherFragment;
+import com.example.attendancemanager.ui.main.teachers.allteachers.AllTeachersFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +30,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.support.AndroidSupportInjection;
 
-public class StudentsHomeFragment extends Fragment {
+public class TeachersHomeFragment extends Fragment {
+
 
     @Inject
     HomeAdapter adapter;
@@ -35,14 +39,14 @@ public class StudentsHomeFragment extends Fragment {
     RecyclerView recyclerView;
 
     @Inject
-    AddStudentFragment addStudentFragment;
+    AddTeacherFragment addTeacherFragment;
 
     @Inject
-    AllStudentsFragment allStudentsFragment;
+    AllTeachersFragment allTeachersFragment;
 
     ArrayList<HomeItem> mList;
 
-    private static final String TAG = "StudentsHomeFragment";
+    private static final String TAG = "TeachersHomeFrament";
 
 
     private View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -71,31 +75,27 @@ public class StudentsHomeFragment extends Fragment {
         }
     };
 
-
-
     @Inject
-    public StudentsHomeFragment() {
+    public TeachersHomeFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_students_home, container, false);
-
-
+        View view =  inflater.inflate(R.layout.fragment_teachers_home, container, false);
         AndroidSupportInjection.inject(this);
-        ButterKnife.bind(this,view);
-
+        ButterKnife.bind(this, view);
 
         setUpRecyclerView(recyclerView,adapter);
+
 
         return view;
     }
@@ -104,18 +104,17 @@ public class StudentsHomeFragment extends Fragment {
     public void onAttach(Context context) {
 
         AndroidSupportInjection.inject(this);
-
         super.onAttach(context);
     }
+
     private void goToFragment(int position) {
 
         switch (position){
 
-            case 0 :    initializeFragments(allStudentsFragment);
+            case 0 :    initializeFragments(allTeachersFragment);
                 break;
-            case 1 :    initializeFragments(addStudentFragment);
+            case 1 :    initializeFragments(addTeacherFragment);
                 break;
-
         }
 
     }
@@ -133,8 +132,8 @@ public class StudentsHomeFragment extends Fragment {
 
     private List<HomeItem> loadItems() {
         mList = new ArrayList<>();
-        mList.add(new HomeItem(R.drawable.ic_take_attendance,"Students Data"));
-        mList.add(new HomeItem(R.drawable.ic_routine,"Add a student"));
+        mList.add(new HomeItem(R.drawable.ic_take_attendance,"Teachers Data"));
+        mList.add(new HomeItem(R.drawable.ic_routine,"Add a teacher"));
 
         return mList;
 

@@ -9,8 +9,13 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.attendancemanager.base.BaseViewModel;
 import com.example.attendancemanager.data.AppDataManager;
 import com.example.attendancemanager.data.models.DefaultResponse;
+import com.example.attendancemanager.data.models.main.classes.AddClassBody;
+import com.example.attendancemanager.data.models.main.classes.AllClassResponse;
+import com.example.attendancemanager.data.models.main.classes.AllDepartmentsResponse;
 import com.example.attendancemanager.data.models.main.student.AllStudentsResponse;
 import com.example.attendancemanager.data.models.main.student.StudentBody;
+import com.example.attendancemanager.data.models.main.teacher.AllTeachersResponse;
+import com.example.attendancemanager.data.models.main.teacher.TeacherBody;
 
 import javax.inject.Inject;
 
@@ -26,17 +31,28 @@ public class MainViewModel extends BaseViewModel {
     private AppDataManager appDataManager;
     public static final String TAG = "MainActivityViewModel";
 
-    //Students status
+    // status
     private MutableLiveData<Integer> addStudentStatus;
     private MutableLiveData<Integer> getAllStudentsStatus;
     private MutableLiveData<Integer> getStudentStatus;
     private MutableLiveData<Integer> patchStudentsStatus;
     private MutableLiveData<Integer> deleteStudentStatus;
+    private MutableLiveData<Integer> addTeacherStatus;
+    private MutableLiveData<Integer> getAllTeachersStatus;
+    private MutableLiveData<Integer> getSingleTeacherStatus;
+    private MutableLiveData<Integer> patchTeacherStatus;
+    private MutableLiveData<Integer> deleteTeacherStatus;
+    private MutableLiveData<Integer> getAllDepartmentsStatus;
+    private MutableLiveData<Integer> addClassStatus;
 
-    //Students responses
+
+    // responses
     private MutableLiveData<AllStudentsResponse> getAllStudents;
     private MutableLiveData<AllStudentsResponse> getOneStudent;
-
+    private MutableLiveData<AllTeachersResponse> getAllTeachers;
+    private MutableLiveData<AllTeachersResponse> getOneTeacher;
+    private MutableLiveData<AllDepartmentsResponse> getAllDepartments;
+    private MutableLiveData<AllClassResponse> getSubjectsByDepartments;
 
     //Getters
     public LiveData<Integer> getAddStudentStatus(){
@@ -67,6 +83,42 @@ public class MainViewModel extends BaseViewModel {
             deleteStudentStatus = new MutableLiveData<>();
         return deleteStudentStatus;
     }
+    public LiveData<Integer> getAddTeacherStatus(){
+        if (addTeacherStatus==null)
+            addTeacherStatus = new MutableLiveData<>();
+        return addTeacherStatus;
+    }
+    public LiveData<Integer> getAllTeachersStatus(){
+        if (getAllTeachersStatus==null)
+            getAllTeachersStatus = new MutableLiveData<>();
+        return getAllTeachersStatus;
+    }
+    public LiveData<Integer> getSingleTeacherStatus(){
+        if (getSingleTeacherStatus==null)
+            getSingleTeacherStatus = new MutableLiveData<>();
+        return getSingleTeacherStatus;
+    }
+    public LiveData<Integer> patchTeacherStatus(){
+        if (patchTeacherStatus==null)
+            patchTeacherStatus = new MutableLiveData<>();
+        return patchTeacherStatus;
+    }
+    public LiveData<Integer> deleteTeacherStatus(){
+        if (deleteTeacherStatus==null)
+            deleteTeacherStatus = new MutableLiveData<>();
+        return deleteTeacherStatus;
+    }
+    public LiveData<Integer> getAllDepartmentsStatus(){
+        if (getAllDepartmentsStatus==null)
+            getAllDepartmentsStatus = new MutableLiveData<>();
+        return getAllDepartmentsStatus;
+    }
+    public LiveData<Integer> addClassStatus(){
+        if (addClassStatus==null)
+            addClassStatus = new MutableLiveData<>();
+        return addClassStatus;
+    }
+
 
     //Response getters
     public LiveData<AllStudentsResponse> getAllStudentsResponse(){
@@ -79,7 +131,28 @@ public class MainViewModel extends BaseViewModel {
             getOneStudent = new MutableLiveData<>();
         return getOneStudent;
     }
+    public LiveData<AllTeachersResponse> getAllTeachersResponse(){
+        if (getAllTeachers==null)
+            getAllTeachers = new MutableLiveData<>();
+        return getAllTeachers;
+    }
+    public LiveData<AllTeachersResponse> getSingleTeachersResponse(){
+        if (getOneTeacher==null)
+            getOneTeacher = new MutableLiveData<>();
+        return getOneTeacher;
+    }
+    public LiveData<AllDepartmentsResponse> getAllDepartmentsResponse(){
+        if (getAllDepartments ==null)
+            getAllDepartments = new MutableLiveData<>();
+        return getAllDepartments;
+    }
 
+
+    public LiveData<AllClassResponse> getAllSubjectsForDepartment(){
+        if (getSubjectsByDepartments ==null)
+            getSubjectsByDepartments = new MutableLiveData<>();
+        return getSubjectsByDepartments;
+    }
 
     @Inject
     public MainViewModel(AppDataManager appDataManager, Application application) {
@@ -250,5 +323,236 @@ public class MainViewModel extends BaseViewModel {
             }
         });
     }
+    public void addATeacher(TeacherBody body){
+        if (addTeacherStatus==null)
+            addTeacherStatus = new MutableLiveData<>();
+
+        appDataManager.addTeacher(body).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<Response<DefaultResponse>>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                getCompositeDisposable().add(d);
+            }
+
+            @Override
+            public void onNext(Response<DefaultResponse> defaultResponseResponse) {
+                addTeacherStatus.setValue(defaultResponseResponse.code());
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                addTeacherStatus.setValue(500);
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+    public void getAllTeachers(){
+        if (getAllTeachers==null)
+            getAllTeachers = new MutableLiveData<>();
+        if (getAllTeachersStatus==null)
+            getAllTeachersStatus = new MutableLiveData<>();
+
+        appDataManager.getAllTeachers().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<Response<AllTeachersResponse>>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                getCompositeDisposable().add(d);
+            }
+
+            @Override
+            public void onNext(Response<AllTeachersResponse> allTeachersResponseResponse) {
+                getAllTeachersStatus.setValue(allTeachersResponseResponse.code());
+                if (allTeachersResponseResponse.code()==200)
+                    getAllTeachers.setValue(allTeachersResponseResponse.body());
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                getAllTeachersStatus.setValue(500);
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+    public void getSingleTeacher(String id){
+        if (getOneTeacher==null)
+            getOneTeacher = new MutableLiveData<>();
+        if (getSingleTeacherStatus==null)
+            getSingleTeacherStatus = new MutableLiveData<>();
+
+        appDataManager.getSingleTeacher(id).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<Response<AllTeachersResponse>>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                getCompositeDisposable().add(d);
+            }
+
+            @Override
+            public void onNext(Response<AllTeachersResponse> allTeachersResponseResponse) {
+                getSingleTeacherStatus.setValue(allTeachersResponseResponse.code());
+                if (allTeachersResponseResponse.code()==200)
+                    getOneTeacher.setValue(allTeachersResponseResponse.body());
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                getSingleTeacherStatus.setValue(500);
+                Log.e(TAG, "onError: ",e );
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+    public void patchSingleTeacher(String id,TeacherBody body){
+        if (patchTeacherStatus==null)
+            patchTeacherStatus = new MutableLiveData<>();
+
+        appDataManager.patchSingleTeacher(id,body).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<Response<DefaultResponse>>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                getCompositeDisposable().add(d);
+            }
+
+            @Override
+            public void onNext(Response<DefaultResponse> defaultResponseResponse) {
+                patchTeacherStatus.setValue(defaultResponseResponse.code());
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                patchTeacherStatus.setValue(500);
+                Log.e(TAG, "onError: ", e);
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+    public void deleteSingleTeacher(String id){
+        if (deleteTeacherStatus==null)
+            deleteTeacherStatus = new MutableLiveData<>();
+        appDataManager.deleteSingleTeacher(id).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<Response<DefaultResponse>>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                getCompositeDisposable().add(d);
+            }
+
+            @Override
+            public void onNext(Response<DefaultResponse> defaultResponseResponse) {
+                deleteTeacherStatus.setValue(defaultResponseResponse.code());
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                deleteTeacherStatus.setValue(500);
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+    public void getAllDepartments(){
+        if (getAllDepartments ==null)
+            getAllDepartments = new MutableLiveData<>();
+        if (getAllDepartmentsStatus==null)
+            getAllDepartmentsStatus = new MutableLiveData<>();
+        appDataManager.getAllDepartments().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<Response<AllDepartmentsResponse>>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                getCompositeDisposable().add(d);
+            }
+
+            @Override
+            public void onNext(Response<AllDepartmentsResponse> allDepartmentsResponseResponse) {
+                getAllDepartmentsStatus.setValue(allDepartmentsResponseResponse.code());
+                if (allDepartmentsResponseResponse.code()==200)
+                    getAllDepartments.setValue(allDepartmentsResponseResponse.body());
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                getAllDepartmentsStatus.setValue(500);
+                Log.e(TAG, "onError: ", e);
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+    public void addClass(AddClassBody body){
+        if (addClassStatus==null)
+            addClassStatus = new MutableLiveData<>();
+        appDataManager.addClass(body).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<Response<DefaultResponse>>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                getCompositeDisposable().add(d);
+            }
+
+            @Override
+            public void onNext(Response<DefaultResponse> defaultResponseResponse) {
+                addClassStatus.setValue(defaultResponseResponse.code());
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                addClassStatus.setValue(500);
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+
+    public void getSubjectsByDepartment(String department){
+        if (getSubjectsByDepartments==null)
+            getSubjectsByDepartments = new MutableLiveData<>();
+        appDataManager.getSubjectsByDepartment(department).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<Response<AllClassResponse>>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                getCompositeDisposable().add(d);
+            }
+
+            @Override
+            public void onNext(Response<AllClassResponse> allDepartmentsResponseResponse) {
+                if (allDepartmentsResponseResponse.code()==200){
+                    getSubjectsByDepartments.setValue(allDepartmentsResponseResponse.body());
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+
 
 }

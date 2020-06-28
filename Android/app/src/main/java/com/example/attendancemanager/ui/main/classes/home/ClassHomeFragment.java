@@ -1,18 +1,20 @@
-package com.example.attendancemanager.ui.main.students.home;
+package com.example.attendancemanager.ui.main.classes.home;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
 import com.example.attendancemanager.R;
+import com.example.attendancemanager.ui.main.classes.addClass.AddClassFragment;
 import com.example.attendancemanager.ui.main.home.adapter.HomeAdapter;
 import com.example.attendancemanager.ui.main.home.adapter.HomeItem;
 import com.example.attendancemanager.ui.main.students.addStudent.AddStudentFragment;
@@ -27,7 +29,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.support.AndroidSupportInjection;
 
-public class StudentsHomeFragment extends Fragment {
+public class ClassHomeFragment extends Fragment {
+
 
     @Inject
     HomeAdapter adapter;
@@ -41,6 +44,9 @@ public class StudentsHomeFragment extends Fragment {
     AllStudentsFragment allStudentsFragment;
 
     ArrayList<HomeItem> mList;
+
+    @Inject
+    AddClassFragment addClassFragment;
 
     private static final String TAG = "StudentsHomeFragment";
 
@@ -73,32 +79,36 @@ public class StudentsHomeFragment extends Fragment {
 
 
 
+
     @Inject
-    public StudentsHomeFragment() {
+    public ClassHomeFragment() {
         // Required empty public constructor
     }
+
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_students_home, container, false);
-
+        View view =  inflater.inflate(R.layout.fragment_class_home, container, false);
 
         AndroidSupportInjection.inject(this);
-        ButterKnife.bind(this,view);
+        ButterKnife.bind(this, view);
 
 
         setUpRecyclerView(recyclerView,adapter);
 
         return view;
     }
+
+
 
     @Override
     public void onAttach(Context context) {
@@ -107,20 +117,6 @@ public class StudentsHomeFragment extends Fragment {
 
         super.onAttach(context);
     }
-    private void goToFragment(int position) {
-
-        switch (position){
-
-            case 0 :    initializeFragments(allStudentsFragment);
-                break;
-            case 1 :    initializeFragments(addStudentFragment);
-                break;
-
-        }
-
-    }
-
-
 
     private void setUpRecyclerView(RecyclerView recyclerView, HomeAdapter adapter) {
 
@@ -133,8 +129,7 @@ public class StudentsHomeFragment extends Fragment {
 
     private List<HomeItem> loadItems() {
         mList = new ArrayList<>();
-        mList.add(new HomeItem(R.drawable.ic_take_attendance,"Students Data"));
-        mList.add(new HomeItem(R.drawable.ic_routine,"Add a student"));
+        mList.add(new HomeItem(R.drawable.ic_take_attendance,"Add new class"));
 
         return mList;
 
@@ -151,4 +146,14 @@ public class StudentsHomeFragment extends Fragment {
     }
 
 
+    private void goToFragment(int position) {
+
+        switch (position){
+
+            case 0 :    initializeFragments(addClassFragment);
+                break;
+
+        }
+
+    }
 }
