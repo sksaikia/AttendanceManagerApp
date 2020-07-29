@@ -44,6 +44,7 @@ public class MainViewModel extends BaseViewModel {
     private MutableLiveData<Integer> deleteTeacherStatus;
     private MutableLiveData<Integer> getAllDepartmentsStatus;
     private MutableLiveData<Integer> addClassStatus;
+    private MutableLiveData<Integer> getSubjectsByDepartment;
 
 
     // responses
@@ -117,6 +118,13 @@ public class MainViewModel extends BaseViewModel {
         if (addClassStatus==null)
             addClassStatus = new MutableLiveData<>();
         return addClassStatus;
+    }
+    public LiveData<Integer> getSubjectsByDepartmentStatus(){
+
+        if (getSubjectsByDepartment==null)
+            getSubjectsByDepartment = new MutableLiveData<>();
+        return getSubjectsByDepartment;
+
     }
 
 
@@ -528,6 +536,8 @@ public class MainViewModel extends BaseViewModel {
     public void getSubjectsByDepartment(String department){
         if (getSubjectsByDepartments==null)
             getSubjectsByDepartments = new MutableLiveData<>();
+        if (getSubjectsByDepartment==null)
+            getSubjectsByDepartment = new MutableLiveData<>();
         appDataManager.getSubjectsByDepartment(department).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<Response<AllClassResponse>>() {
             @Override
@@ -537,6 +547,7 @@ public class MainViewModel extends BaseViewModel {
 
             @Override
             public void onNext(Response<AllClassResponse> allDepartmentsResponseResponse) {
+                getSubjectsByDepartment.setValue(allDepartmentsResponseResponse.code());
                 if (allDepartmentsResponseResponse.code()==200){
                     getSubjectsByDepartments.setValue(allDepartmentsResponseResponse.body());
                 }
@@ -544,7 +555,7 @@ public class MainViewModel extends BaseViewModel {
 
             @Override
             public void onError(Throwable e) {
-
+                getSubjectsByDepartment.setValue(404);
             }
 
             @Override

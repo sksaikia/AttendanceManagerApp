@@ -112,6 +112,7 @@ public class AddRoutineFragment extends Fragment {
 
 
         viewModel.getAllDepartments();
+
         subscribeObservers();
 
         return view;
@@ -120,6 +121,19 @@ public class AddRoutineFragment extends Fragment {
     private void subscribeObservers() {
         subscribeObserversForDepartments();
         subscribeObsserverForSubjectByDepartment();
+        subscribeObserverForStatusSubjectDepartment();
+    }
+
+    private void subscribeObserverForStatusSubjectDepartment() {
+        viewModel.getSubjectsByDepartmentStatus().observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                int x = integer;
+                ArrayList<ClassResponse> subjectList = new ArrayList<>();
+                if (x==404)
+                    setUpSubjectsSpinner(subjectList);
+            }
+        });
     }
 
     private void subscribeObsserverForSubjectByDepartment() {
